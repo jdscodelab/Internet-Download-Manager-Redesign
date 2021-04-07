@@ -1,0 +1,86 @@
+﻿<UserControl x:Class="InternetDownloadManagerRedesign.CustomControl.ListBoxItemCustom"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InternetDownloadManagerRedesign.CustomControl"
+             mc:Ignorable="d" x:Name="this"
+             Foreground="#41535A"
+             d:DesignHeight="50" d:DesignWidth="723"
+             MinHeight="50"
+             HorizontalAlignment="Stretch"
+             Focusable="False">
+    <UserControl.Resources>
+        <ControlTemplate x:Key="RadioStyle" TargetType="{x:Type ToggleButton}">
+            <Border CornerRadius="15"
+                    Background="{TemplateBinding Background}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition Width="108"/>
+                        <ColumnDefinition Width="112"/>
+                        <ColumnDefinition Width="102"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid
+                        Margin="5,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <!--File Type Icon-->
+                        <Path 
+                            Height="30"
+                            Data="{Binding IconData, ElementName=this}"
+                                          Fill="{Binding IconColor, ElementName=this}"/>
+
+                        <!--File Name-->
+                        <TextBlock 
+                            Grid.Column="1"
+                            Text="{Binding FileName, ElementName=this, FallbackValue='File Name'}"
+                                                   Margin="5,0"
+                                                   VerticalAlignment="Center"/>
+                    </Grid>
+                    <!--Queue-->
+                    <TextBlock Grid.Column="1" Text="{Binding Queue, ElementName=this}"
+                                                   Margin="5,0"
+                                                   VerticalAlignment="Center"/>
+
+                    <!--File Size-->
+                    <TextBlock Grid.Column="2" Text="{Binding FileSize, ElementName=this, FallbackValue='File Size'}"
+                                                   Margin="5,0"
+                                                   VerticalAlignment="Center"/>
+
+                    <!--Status-->
+                    <TextBlock Grid.Column="3" Text="{Binding Status, ElementName=this,FallbackValue='Download Status'}"
+                                                   Margin="5,0"
+                                                   VerticalAlignment="Center"/>
+
+                    <!--Last Try-->
+                    <TextBlock Grid.Column="4" Text="{Binding LastTry, ElementName=this, FallbackValue='Last Try On'}"
+                                                   Margin="5,0"
+                                                   VerticalAlignment="Center"/>
+                    <!--<Separator
+            BorderBrush="#D5E0E5"
+            VerticalAlignment="Bottom" 
+            Grid.ColumnSpan="5"/>-->
+                </Grid>
+
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="#EEF3F5"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#EEF3F5"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </UserControl.Resources>
+    <RadioButton 
+                 Template="{StaticResource RadioStyle}" 
+                 GroupName="items"
+                 Margin="0,5"
+                 Height="50"/>
+</UserControl>

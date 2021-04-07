@@ -1,0 +1,600 @@
+﻿<Window x:Class="InternetDownloadManagerRedesign.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InternetDownloadManagerRedesign" 
+        xmlns:CustomControl="clr-namespace:InternetDownloadManagerRedesign.CustomControl"
+        mc:Ignorable="d"
+        Background="Transparent"
+        AllowsTransparency="True"
+        Title="MainWindow" Height="585" Width="930"
+        ResizeMode="NoResize" WindowStyle="None" WindowStartupLocation="CenterScreen"
+        FontSize="15">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/assets/myIcons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="OptionBorderStyle" TargetType="{x:Type Border}">
+                <Setter Property="CornerRadius" Value="15"/>
+                <Setter Property="Height" Value="30"/>
+            </Style>
+
+            <Style TargetType="{x:Type Path}">
+                <!--<Setter Property="Height" Value="15"/>
+                <Setter Property="Width" Value="15"/>-->
+                <Setter Property="Fill" Value="#9AA8AE"/>
+                <Setter Property="Stretch" Value="Uniform"/>
+            </Style>
+
+            <Style TargetType="{x:Type TreeViewItem}">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="#41535A"/>
+                <Setter Property="FontWeight" Value="Normal"/>
+               
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Foreground" Value="#41535A"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="menuButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="Height" Value="15"/>
+                <Setter Property="Width" Value="15"/>
+                <Setter Property="Margin" Value="2,0"/>
+                <Setter Property="Opacity" Value=".7"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="5">
+                                
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Opacity" Value="1"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Border
+        CornerRadius="15"
+        Background="#EEF3F5">
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!--Menu-->
+                <RowDefinition Height="Auto"/>
+                <!--Option Buttons-->
+                <RowDefinition/>
+                <!--Download List-->
+            </Grid.RowDefinitions>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!--Logo-->
+                <Image
+                    Source="/assets/logo.png"
+                    Height="25"
+                    Width="25"/>
+
+                <!--Menu-->
+                <Menu
+                    Grid.Column="1"
+                    Margin="10,0"
+                    FontSize="15"
+                            Foreground="#41535A"
+                    VerticalAlignment="Center"
+                    Background="Transparent">
+                    <MenuItem
+                        Padding="20,0"
+                    Header="Tasks"/>
+                    <MenuItem
+                        Padding="20,0"
+                    Header="File"/>
+                    <MenuItem
+                        Padding="20,0"
+                    Header="View"/>
+                    <MenuItem
+                        Padding="20,0"
+                    Header="Help"/>
+                </Menu>
+                <StackPanel
+                    Grid.Column="2"
+                    Orientation="Horizontal">
+                    <Button
+                        Style="{StaticResource menuButtonStyle}"
+                        HorizontalAlignment="Right"
+                        Background="Yellow"/>
+                    <Button
+                        Style="{StaticResource menuButtonStyle}"
+                        HorizontalAlignment="Right"
+                        Background="Green"/>
+                    <Button
+                        Style="{StaticResource menuButtonStyle}"
+                        HorizontalAlignment="Right"
+                        Background="Red"/>
+                </StackPanel>
+            </Grid>
+
+           
+            <!--Option Buttons-->
+            <StackPanel 
+                Margin="0,5"
+                Orientation="Horizontal"
+                Grid.Row="1">
+                <Border
+                    Background="#D5E0E5"
+                    CornerRadius="15"
+                    Padding="20">
+                    <Button
+                        Background="Transparent"
+                        BorderThickness="0"
+                        VerticalContentAlignment="Center" Style="{DynamicResource ButtonStyle1}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <!--Icon (Add Url)-->
+                                <ColumnDefinition/>
+                                <!--Text-->
+                            </Grid.ColumnDefinitions>
+                            <Border 
+                                Style="{StaticResource OptionBorderStyle}"
+                                    Width="30">
+                                <Path
+                                    Data="{StaticResource addUrl}"/>
+                            </Border>
+
+                            <TextBlock
+                                Foreground="#41535A"
+                                FontWeight="SemiBold"
+                                Grid.Column="1"
+                                Padding="6,0"
+                                Text="Add URL"
+                                VerticalAlignment="Center"/>
+                        </Grid>
+                    </Button>
+                </Border>
+
+                <Border
+                    Background="#D5E0E5"
+                    CornerRadius="15"
+                    Margin="20,0"
+                    Padding="20">
+                    <StackPanel
+                        Orientation="Horizontal">
+                        <TextBlock
+                            HorizontalAlignment="Left"
+                                Foreground="#9AA8AE"
+                                FontWeight="SemiBold"
+                                Grid.Column="1"
+                                VerticalAlignment="Center"><Run Text="Download"/><LineBreak/><Run Text="Controller"/></TextBlock>
+
+                        <Button 
+                            Margin="15,0"
+                            Height="32" 
+                            Width="32"
+                            BorderThickness="0"
+                            Background="Transparent">
+                            <Grid>
+                                <Ellipse
+                                Height="30"
+                                Width="30"
+                                Stretch="Uniform"
+                                StrokeThickness="0"
+                                Fill="#CBD7DC"/>
+
+                                <Path
+                                    Data="{StaticResource start}"
+                                    Height="10"
+                                    Width="10"
+                                    Fill="#9AA8AE"/>
+                            </Grid>
+                        </Button>
+
+                        <Button 
+                            Height="32" 
+                            Width="32"
+                            BorderThickness="0"
+                            Background="Transparent">
+                            <Grid>
+                                <Ellipse
+                                Height="30"
+                                Width="30"
+                                Stretch="Uniform"
+                                StrokeThickness="0"
+                                Fill="#CBD7DC"/>
+
+                                <Path
+                                    Data="{StaticResource stop}"
+                                    Height="10"
+                                    Width="10"
+                                    Fill="#9AA8AE"/>
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                </Border>
+
+                <Border
+                    Background="#D5E0E5"
+                    CornerRadius="15"
+                    Padding="20">
+                    <StackPanel Orientation="Horizontal">
+                        <Button
+                        Background="Transparent"
+                        BorderThickness="0"
+                        VerticalContentAlignment="Center" Style="{DynamicResource ButtonStyle1}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Border 
+                                Style="{StaticResource OptionBorderStyle}"
+                                    Width="30">
+                                    <Path
+                                    Data="{StaticResource delete}"
+                                    Height="15"/>
+                                </Border>
+
+                                <TextBlock
+                                Grid.Row="1"
+                                Foreground="#41535A"
+                                FontWeight="SemiBold"
+                                Grid.Column="1"
+                                Padding="6,0"
+                                Text="Delete"
+                                VerticalAlignment="Center"/>
+                            </Grid>
+                        </Button>
+                        <Button
+                        Background="Transparent"
+                        BorderThickness="0"
+                        VerticalContentAlignment="Center" Style="{DynamicResource ButtonStyle1}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Border 
+                                Style="{StaticResource OptionBorderStyle}"
+                                    Width="30">
+                                    <Path
+                                    Data="{StaticResource deleteAll}"
+                                    Height="15"/>
+                                </Border>
+
+                                <TextBlock
+                                Grid.Row="1"
+                                Foreground="#41535A"
+                                FontWeight="SemiBold"
+                                Grid.Column="1"
+                                Padding="6,0"
+                                Text="Delete All"
+                                VerticalAlignment="Center"/>
+                            </Grid>
+                        </Button>
+
+                    </StackPanel>
+                </Border>
+
+                <Border
+                    Margin="20,0"
+                    Background="#D5E0E5"
+                    CornerRadius="15"
+                    Padding="20">
+                    <StackPanel Orientation="Horizontal">
+                        <Button
+                        Background="Transparent"
+                        BorderThickness="0"
+                        VerticalContentAlignment="Center" Style="{DynamicResource ButtonStyle1}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Border 
+                                Style="{StaticResource OptionBorderStyle}"
+                                    Width="30">
+                                    <Path
+                                    Data="{StaticResource startQueue}"
+                                    Height="15"/>
+                                </Border>
+
+                                <TextBlock
+                                Grid.Row="1"
+                                Foreground="#41535A"
+                                FontWeight="SemiBold"
+                                Grid.Column="1"
+                                Padding="6,0"
+                                Text="Start Queue"
+                                VerticalAlignment="Center"/>
+                            </Grid>
+                        </Button>
+                        <Button
+                        Background="Transparent"
+                        BorderThickness="0"
+                        VerticalContentAlignment="Center" Style="{DynamicResource ButtonStyle1}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Border 
+                                Style="{StaticResource OptionBorderStyle}"
+                                    Width="30">
+                                    <Path
+                                    Data="{StaticResource stopQueue}"
+                                    Height="15"/>
+                                </Border>
+
+                                <TextBlock
+                                Grid.Row="1"
+                                Foreground="#41535A"
+                                FontWeight="SemiBold"
+                                Grid.Column="1"
+                                Padding="6,0"
+                                Text="Stop Queue"
+                                VerticalAlignment="Center"/>
+                            </Grid>
+                        </Button>
+
+                    </StackPanel>
+                </Border>
+                <Button
+                        Background="Transparent"
+                        BorderThickness="0"
+                        VerticalContentAlignment="Center" Style="{DynamicResource ButtonStyle1}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Path
+                                    Data="{StaticResource options}"
+                                Height="30"/>
+
+                        <TextBlock
+                                Grid.Row="1"
+                                Foreground="#41535A"
+                                FontWeight="SemiBold"
+                                Grid.Column="1"
+                                Padding="6,0"
+                                Text="Options"
+                                VerticalAlignment="Center"/>
+                    </Grid>
+                </Button>
+            </StackPanel>
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="143"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Border 
+                    BorderBrush="#CBD7DC"
+                    BorderThickness="1"
+                    CornerRadius="15">
+                    <StackPanel
+                        Margin="0,10">
+                        <TextBlock
+                            HorizontalAlignment="Left"
+                            Margin="10"
+                            Text="Categories"
+                            Foreground="#9AA8AE"/>
+
+                        <!--Download Category list-->
+                        <TreeView
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Foreground="#41535A"
+                            HorizontalContentAlignment="Left">
+                            
+                            <!--Trying to change Selected Item Background color from Blue to light blue or Transparent... as you require...-->
+                            <TreeView.Resources>
+                                <SolidColorBrush
+                                    x:Key="{x:Static SystemColors.HighlightBrushKey}"
+                                    Color="Transparent"/>
+                            </TreeView.Resources>
+                            <TreeViewItem
+                                Header="All Downloads"
+                                IsSelected="True"
+                                IsExpanded="True">
+                                <TreeViewItem Header="Compressed"/>
+                                <TreeViewItem Header="Documents"/>
+                                <TreeViewItem Header="Programs"/>
+                                <TreeViewItem Header="Musics"/>
+                                <TreeViewItem Header="Videos"/>
+                            </TreeViewItem>
+
+                            <TreeViewItem
+                                Header="Completed">
+                                <TreeViewItem Header="Compressed"/>
+                                <TreeViewItem Header="Documents"/>
+                                <TreeViewItem Header="Programs"/>
+                                <TreeViewItem Header="Musics"/>
+                                <TreeViewItem Header="Videos"/>
+                            </TreeViewItem>
+                        </TreeView>
+                    </StackPanel>
+                </Border>
+
+                <Border 
+                    Background="White"
+                    BorderBrush="#CBD7DC"
+                    BorderThickness="1"
+                    CornerRadius="15"
+                    Grid.Column="1"
+                    Margin="20,0,0,0"
+                    Padding="10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/> <!--Header-->
+                            <RowDefinition/> <!--Rows-->
+                        </Grid.RowDefinitions>
+
+                        <!--Header-->
+                        <Border
+                            Background="#D5E0E5"
+                            CornerRadius="15"
+                            Height="40">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="250"/>
+                                    <ColumnDefinition Width="108"/>
+                                    <ColumnDefinition Width="112"/>
+                                    <ColumnDefinition Width="102"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <!--FileName-->
+                                <Grid>
+                                <TextBlock
+                                    Foreground="#41535A"
+                                    FontWeight="SemiBold"
+                                    Padding="10,0"
+                                    Text="File Name"
+                                    VerticalAlignment="Center"/>
+
+                                <Rectangle
+                                    Height="20"
+                                    Stroke="#41535A"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Stretch"/>
+                                </Grid>
+                                
+                                <!--Queue-->
+                                <Grid Grid.Column="1">
+                                <TextBlock
+                                    Foreground="#41535A"
+                                    FontWeight="SemiBold"
+                                    Padding="10,0"
+                                    Text="Queue"
+                                    VerticalAlignment="Center"/>
+
+                                <Rectangle
+                                    Height="20"
+                                    Stroke="#41535A"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Stretch"/>
+                                </Grid>
+                                
+                                <!--File Size-->
+                                <Grid Grid.Column="2">
+                                    <TextBlock
+                                    Foreground="#41535A"
+                                    FontWeight="SemiBold"
+                                    Padding="10,0"
+                                    Text="File Size"
+                                    VerticalAlignment="Center"/>
+
+                                    <Rectangle
+                                    Height="20"
+                                    Stroke="#41535A"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Stretch"/>
+                                </Grid>
+
+                                <!--Status-->
+                                <Grid Grid.Column="3">
+                                    <TextBlock
+                                    Foreground="#41535A"
+                                    FontWeight="SemiBold"
+                                    Padding="10,0"
+                                    Text="Status"
+                                    VerticalAlignment="Center"/>
+
+                                    <Rectangle
+                                    Height="20"
+                                    Stroke="#41535A"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Stretch"/>
+                                </Grid>
+
+                                <!--Last Try-->
+                                <Grid Grid.Column="4">
+                                    <TextBlock
+                                    Foreground="#41535A"
+                                    FontWeight="SemiBold"
+                                    Padding="10,0"
+                                    Text="Last Try"
+                                    VerticalAlignment="Center"/>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                        
+                        
+                        <!--Rows-->
+                        <ItemsControl
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Grid.Row="1"
+                            HorizontalContentAlignment="Stretch">
+                            <!--Guys, most of you complain that your custom control is not working.. most of the time it is due to not initializing this line above.-->
+                            <CustomControl:ListBoxItemCustom
+                                IconData="{StaticResource pdf}"
+                                IconColor="Red"
+                                FileName="Manual.pdf"
+                                FileSize="2.05Mb"
+                                Status="Completed"
+                                LastTry="15:20 25th Oct 2020"/>
+
+                            <CustomControl:ListBoxItemCustom
+                                IconData="{StaticResource audio}"
+                                IconColor="Gold"
+                                FileName="Music.mp3"
+                                FileSize="2.05Mb"
+                                Status="Completed"
+                                LastTry="15:20 25th Oct 2020"/>
+
+                            <CustomControl:ListBoxItemCustom
+                                IconData="{StaticResource video}"
+                                IconColor="Gray"
+                                FileName="Movie.mp4"
+                                FileSize="2.05Mb"
+                                Status="Completed"
+                                LastTry="15:20 25th Oct 2020"/>
+                            <CustomControl:ListBoxItemCustom
+                                IconData="{StaticResource zip}"
+                                IconColor="Brown"
+                                FileName="Files.mp3"
+                                FileSize="2.05Mb"
+                                Status="Completed"
+                                LastTry="15:20 25th Oct 2020"/>
+                            <CustomControl:ListBoxItemCustom
+                                IconData="{StaticResource pdf}"
+                                IconColor="Red"
+                                FileName="Key to success.mp3"
+                                FileSize="2.05Mb"
+                                Status="Completed"
+                                LastTry="15:20 25th Oct 2020"/>
+                            <CustomControl:ListBoxItemCustom
+                                IconData="{StaticResource video}"
+                                IconColor="DarkGray"
+                                FileName="Some Video.mp3"
+                                FileSize="2.05Mb"
+                                Status="Completed"
+                                LastTry="15:20 25th Oct 2020"/>
+                        </ItemsControl>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
